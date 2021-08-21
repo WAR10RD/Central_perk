@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    {% block css  %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+   
+        
+    <link rel="icon" href="{% static 'feed/img/brand/favicon.png' %}" type="image/png">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="{% static 'feed/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'feed/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="{% static 'feed/css/argon.css' %}" type="text/css">
+
+  <!-- my css code -->
+
+  <link rel="stylesheet" href="{% static 'feed/css/style.css' %}" type="text/css">  
+{% endblock %}
+    
+    <title>Central Perk</title>
+  </head>
+  
+<body background="{% static 'feed/img/registerPagebackground.jpg' %}" class="img-bg">
+<!--   
+  <div>
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-default border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse alignright" id="navbarSupportedContent"> -->
+          <!-- add icon here -->
+          <!-- Search form -->
+          <!-- <ul class="navbar-nav align-items-center alignright ml-auto ml-md-0 ">
+            <li class="nav-item dropdown alignright">
+          <small class="alignright">
+            <a class="btn btn-primary basic-mod btn-block btn-circled " href="{% url 'login' %}" >Login</a>
+            </small >
+            <small class="alignright">
+              <a class="btn btn-primary basic-mod btn-block btn-circled alignleft" href="{% url 'register' %}" >Register</a>
+              </small >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div> -->
+
+
+  
+      
+    <div>
+      <nav class="navbar navbar-top navbar-expand navbar-dark bg-default border-bottom">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- add icon here -->
+            <!-- Search form  mr-sm-3 ml-auto-->
+            <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3 ml-auto" id="navbar-search-main" method="POST"
+            action="{% url 'search_posts' %}">
+            {% csrf_token %}
+              <div class="form-group mb-0 ">
+                <div class="input-group input-group-alternative input-group-merge">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="Search" name="searched" type="text">
+                </div>
+              </div>
+              <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </form> -->
+            <small class=" ml-auto">
+              <a class="btn btn-primary basic-mod  btn-circled " href="{% url 'login' %}" >Login</a>
+              </small >
+              <small class=" pl-2 alignright">
+                <a class="btn btn-primary basic-mod  btn-circled alignleft" href="{% url 'register' %}" >Register</a>
+              </small >
+              <!-- <small class=" pl-2 alignright">
+              <a class="dropdown-item" href="#" onclick="swapTheme()">
+                  <i id="darkModeIcon" class="fas fa-moon tag-color"></i>
+                  <span id="dark_button" >Enable Dark Mode</span>
+              </a> -->
+            </small>
+            <!-- Navbar links -->
+            
+            
+            
+            
+          </div>
+        </div>
+      </nav>
+    </div>
+    
+      
+
+  {% block content %}
+ 
+  <!-- body content -->
+ 
+{% endblock content %}
+</body>
+
+      <script src="{% static 'feed/js/jqurey.js' %}"></script>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+
+        var setTheme = localStorage.getItem('theme')
+        var iconId = 'darkModeIcon'
+        console.log('theme:', setTheme)
+        
+                
+        if (setTheme == null){
+          swapStyle()
+          document.getElementById('dark_button').textContent = "Enable Dark Mode"
+          document.getElementById(iconId).className = "fas fa-moon"; 
+          
+        }
+        else if(setTheme == '/static/feed/css/style.css'){
+         swapStyleLight()
+         document.getElementById('dark_button').textContent = "Enable Dark Mode"
+         document.getElementById(iconId).className = "fas fa-moon";
+        }else{
+          swapStyleDark()
+          document.getElementById('dark_button').textContent = "Disable Dark Mode"
+          document.getElementById(iconId).className = "fas fa-sun";
+        }
+        
+        function swapTheme(){
+          
+          console.log("id is ",iconId)
+          var text = document.getElementById('dark_button').innerText
+
+          if (text == "Enable Dark Mode"){
+            swapStyleDark()
+            document.getElementById('dark_button').textContent = "Disable Dark Mode"
+            document.getElementById(iconId).className = "fas fa-sun";
+          }else if(text == "Disable Dark Mode"){
+            swapStyleLight()
+            document.getElementById('dark_button').textContent = "Enable Dark Mode"
+            document.getElementById(iconId).className = "fas fa-moon";
+          }
+          
+        }
+
+        //function swapStyle(){
+          
+        //}
+
+        function swapStyleLight(){
+          sheet = "{% static 'feed/css/style.css' %}"
+          document.getElementById('mystylesheet').href = sheet
+          localStorage.setItem('theme', sheet)
+        }
+        function swapStyleDark(){
+          sheet = "{% static 'feed/css/DarkStyle.css' %}"
+          document.getElementById('mystylesheet').href = sheet
+          localStorage.setItem('theme', sheet)
+        }
+    
+        
+        
+      </script>
+      {% block jsfiles %}{% endblock jsfiles %}
+ 
+</html>

@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- <link
+      rel="icon"
+      type="image/png"
+      href="https://dl.dropboxusercontent.com/s/o093y16u4d3kojv/code.png?dl=0"
+    /> -->
+    <!-- Bootstrap CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://dl.dropboxusercontent.com/s/ecyb1drs5j1jyjf/styles.css?dl=0"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+        
+    <link rel="icon" href="{% static 'feed/img/brand/favicon.png' %}" type="image/png">
+  <!-- Fonts -->
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"> -->
+  <!-- Icons -->
+  <link rel="stylesheet" href="{% static 'feed/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'feed/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="{% static 'feed/css/argon.css' %}" type="text/css">
+
+  <!-- my css code -->
+
+  <link id="mystylesheet" rel="stylesheet" type="text/css" href="{% static 'feed/css/style.css' %}">  
+
+    
+    <title>Central Perk</title>
+  </head>
+  
+</head>
+<body>
+  <div>
+    {% if user.is_authenticated %}
+      
+    <div>
+      <nav class="navbar navbar-top navbar-expand navbar-dark bg-default border-bottom">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- add icon here -->
+            <!-- Search form -->
+            <form class="navbar-search navbar-search-light form-inline mr-sm-3 ml-auto" id="navbar-search-main" method="POST"
+            action="{% url 'search_posts' %}">
+            {% csrf_token %}
+              <div class="form-group mb-0 ">
+                <div class="input-group input-group-alternative input-group-merge">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="Search" name="searched" type="text">
+                </div>
+              </div>
+              <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </form>
+            
+            <!-- Navbar links -->
+            
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+              <li class="nav-item dropdown">
+                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="media align-items-center">
+                    <span class=" rounded-circle">
+                      <img src="{{ user.profile.image.url }}" class=" avatar rounded-circle">
+                    </span>
+                    <div class="media-body  ml-2  d-none d-lg-block">
+                      <span class="mb-0 text-sm  font-weight-bold text-uppercase">{{ user.profile.user }}</span>
+                    </div>
+                  </div>
+                </a>
+                <div class="dropdown-menu  dropdown-menu-right ">
+                  <div class="dropdown-header noti-title">
+                    <h6 class="text-overflow m-0">Welcome!</h6>
+                  </div>
+                  <a href="{% url 'my_profile' %}" class="dropdown-item">
+                    <i class="ni ni-single-02"></i>
+                    <span>My profile</span>
+                  </a>
+                  <a class="dropdown-item" onclick="swapTheme()">
+                    <i class="ni ni-settings-gear-65"></i>
+                    <span id="dark_button">Enable Dark Mode</span>
+                  </a>
+                  <a href="{% url 'edit_profile' %}" class="dropdown-item">
+                    <i class="ni ni-settings-gear-65"></i>
+                    <span>Settings</span>
+                  </a>
+                  
+                  <!-- <a href="#!" class="dropdown-item">
+                    <i class="ni ni-calendar-grid-58"></i>
+                    <span>Activity</span>
+                  </a> -->
+                  <!-- <a href="#!" class="dropdown-item">
+                    <i class="ni ni-support-16"></i>
+                    <span>Support</span>
+                  </a> -->
+                  <div class="dropdown-divider"></div>
+                  <a href="{% url 'logout' %}" class="dropdown-item">
+                    <i class="ni ni-user-run"></i>
+                    <span>Logout</span>
+                  </a>
+                </div>
+              </li>
+            </ul>
+            {% endif %} 
+          </div>
+        </div>
+      </nav>
+    </div>
+    
+      {% endif %}
+
+  <div class = "leftbox ">
+    <!-- <div class="sidebar-left "> -->
+    
+    <ul>
+      <li class="spacing"> <i class="fa fa-home px-3 tag-color"  aria-hidden="true"></i><a href="/" class="tag-color  font-style">Home</a></li>
+      <!-- <li><a href="#" class="tag-color font-style">Inbox</a></li> -->
+      <li class="spacing"> <i class="fa fa-inbox px-3 tag-color"  aria-hidden="true"></i><a href="/messages" class="tag-color font-style ">Inbox</a></li>
+      <li class="spacing"> <i class="fa fa-inbox px-3 tag-color"  aria-hidden="true"></i><a href="/follow-list" class="tag-color font-style ">Followers</a></li>
+      <li class="spacing"><i class="fa fa-user px-3 tag-color"  aria-hidden="true"></i><a href="{% url 'my_profile' %}" class="tag-color font-style ">Profile</a></li>
+      <li class="spacing"><i class="fa fa-tools px-3 tag-color"  aria-hidden="true"></i><a href="{% url 'edit_profile' %}" class="tag-color font-style  ">Settings</a></li>
+      
+    </ul>
+  <!-- </div> -->
+</div>
+<div class = "middlebox" style="width: 45%;">
+  {% for post in posts %}
+      <div class="createPost card card-signin my-5" >
+        <!-- <div class="card card-signin my-5"  style="cursor: pointer;"> -->
+          
+          
+          <a href="{% url 'post-detail' post.id %}" style="display: block">
+            
+          <div class="card-body no-padding">
+            <a href="{{ post.user_name.profile.get_absolute_url }}" class="post-details">
+              <img src="{{ post.user_name.profile.image.url }}" class="avatar rounded-circle"  alt=""/>
+
+            </a>
+
+            <a class="text-dark post-details" href="{{ post.user_name.profile.get_absolute_url }}">
+              <b class="post-details">{{ post.user_name }}</b>
+              <!-- <b class="post-details">@{{ post.user_name }}</b> -->
+            </a>
+            <br/>
+            <small class="text-muted">Posted on {{ post.date_posted }}</small>
+            <br /><br />
+          </div>
+          <!-- <div class="card-img-2"> -->
+          <!-- <a href="{% url 'post-detail' post.id %}" > -->
+              <!-- {% if post.pic %}
+              <img class="card-img-top post-img card-img-2 basic-mod" src="{{ post.pic.url }}" alt="" onclick='location.href="{% url 'post-detail' post.id %}";'/>
+            {% endif %} -->
+          <!-- </a> -->
+        <!-- </div> -->
+
+        {% if post.videofile %}
+                
+              <video class="card-img-top post-img card-img-2 basic-mod "  controls>
+                  <source src="{{ post.videofile.url }}" type='video/mp4'>
+                  Your browser does not support the video tag.
+              </video>
+                {% elif followed_post_img %}
+              <div id="carouselExampleControls{{ post.id }}" class="carousel slide carousel-fade" data-ride="carousel">
+                <div class="carousel-inner">
+              {% for sec in followed_post_img %}
+                  {% for imgs in sec %}
+                      {% if post == imgs.post %}
+                      <!-- {{ sec|length }} -->
+                      {% if forloop.first %}
+                      <div class="carousel-item active">
+                          <img class="card-img-top post-img card-img-2 basic-mod " src="{{ imgs.image.url }}" alt="" onclick='location.href="{% url 'post-detail' post.id %}";'>
+                      </div>
+                      {% else %}
+                      
+                      <div class="carousel-item">
+                        <img class="card-img-top post-img card-img-2 basic-mod " src="{{ imgs.image.url }}" alt="" onclick='location.href="{% url 'post-detail' post.id %}";'>
+                      </div>
+
+                      {% endif %}
+                      {% endif %}
+                        
+                  {% endfor %}
+              {% endfor %}                      
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls{{ post.id }}" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls{{ post.id }}" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                {% endif %}
+        <div class="card-text-2 ">
+        <p class="card-text">{{ post.description }}</p>
+      </div>
+          {% if post.tags %}
+            
+          
+            <p class="text-secondary ml-3">
+              <b>Tags: <i>{{ post.tags }}</i></b>
+          </p>
+          {% endif %}
+        </a>
+        
+          <div class="card-footer" style="background: transparent;">
+            <button class="btn btn-white mr-3 like basic-mod" id="{{ post.id }}" >
+              {% if post in liked_post %}
+              <a href="{% url 'post-like' %}" style="color: red" id="likebtn{{ post.id }}" >Unlike</a>| {{post.likes.count}} 
+              {% else %}
+              <a href="{% url 'post-like' %}" style="color: green" id="likebtn{{ post.id }}">Like</a>| {{post.likes.count}} 
+              {% endif %}
+            </button>
+            <a class="btn btn-outline-info basic-mod" href="{% url 'post-detail' post.id %}">Comments | {{ post.details.count }}</a>
+          </div>
+      </div>
+      {% endfor %}
+
+      {% if is_paginated %} 
+              {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}" >Previous</a >
+              {% endif %}
+          {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                  <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                  <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+          {% endfor %}
+
+            {% if page_obj.has_next %}
+                  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a >
+            {% endif %}
+        {% endif %} 
+</div>
+<div class = "rightbox ">
+  <div class="card card-profile shadow user-profile">
+    <div class="row justify-content-center">
+      <div class="col-lg-3 order-lg-2">
+        <div class="card-profile-image profile-img-div">
+          <a href="{{ u.profile.image.url }}">
+            <img src="{{ u.profile.image.url }}" class="rounded-circle profile-img" />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card-body pt-0 ">
+      <div class="row">
+        <!--  <div class="col"> -->
+          <div class=" d-flex justify-content-center profile-stat " >
+            <!-- <div>
+              <span class="heading">{{ u.profile.friends.count }}</span>
+              {% if request.user == u %}
+              <span class="description"
+                ><a href="{% url 'friend_list' %}">Friends</a></span
+              >
+              {% else %}
+              <span class="description">Friends</span>
+              {% endif %}
+              <span class="heading">{{ post_count }}</span>
+              <span class="description"
+                ><a href="{% url 'user-posts' u.username %}"
+                  >Posts</a
+                ></span
+              >
+            </div> -->
+            
+          
+          </div>
+          
+        </div>
+      </div>
+      <div class="text-center ">
+        <div class="float-center">
+          <h3 class="tag-color">{{ u }}</h3>
+          <h4 class="font-style tag-color" >{{ u.profile.bio }}</h4>
+        </div>
+        <span class="heading tag-color" >{{ followers.count }}</span>
+        <h3 class="tag-color" >Followers</h3>
+        <!-- <p>{{ u.profile.bio }}</p> -->
+        <hr class="my-2" />
+        {% if request.user == u %}
+        <a class="btn btn-info basic-mod" href="{% url 'edit_profile' %}"
+          >Edit Profile</a
+        >
+        {% else %} 
+        {% if button_status == 'Follow_the_user' %}
+        <small class="float-center">
+          <a class="btn btn-primary basic-mod  btn-circled" href="{% url 'follow_request' u.id %}" >Follow</a>
+          </small >
+        {% elif button_status == 'unFollow_the_user' %}
+        <small class="float-center"><a class="btn btn-secondary basic-mod  btn-circled" href=" {% url 'un_follow_request' u.id %}">Following</a></small>
+        {% else %}
+        
+        <!-- <small><a class="btn btn-danger" href=" {% url 'un_follow_request' u.id %}">Don't Know</a></small> -->
+        {% endif %}
+        <small class="float-center mt-2">
+          <a class="btn btn-primary basic-mod  btn-circled mr-2" href="{{ u.profile.message_url }}" >Message</a>
+        </small>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+      <script src="{% static 'feed/js/jqurey.js' %}"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script>
+          var setTheme = localStorage.getItem('theme')
+          console.log('theme:', setTheme)
+          
+                  
+          if (setTheme == null){
+            swapStyle()
+            document.getElementById('dark_button').textContent = "Enable Dark Mode"
+          }
+          else if(setTheme == '/static/feed/css/style.css'){
+           swapStyleLight()
+           document.getElementById('dark_button').textContent = "Enable Dark Mode"
+          }else{
+            swapStyleDark()
+            document.getElementById('dark_button').textContent = "Disable Dark Mode"
+          }
+          
+          function swapTheme(){
+            var text = document.getElementById('dark_button').innerText
+  
+            if (text == "Enable Dark Mode"){
+              swapStyleDark()
+              document.getElementById('dark_button').textContent = "Disable Dark Mode"
+            }else if(text == "Disable Dark Mode"){
+              swapStyleLight()
+              document.getElementById('dark_button').textContent = "Enable Dark Mode"
+            }
+            
+          }
+  
+          function swapStyleLight(){
+            sheet = "{% static 'feed/css/style.css' %}"
+            document.getElementById('mystylesheet').href = sheet
+            localStorage.setItem('theme', sheet)
+          }
+          function swapStyleDark(){
+            sheet = "{% static 'feed/css/DarkStyle.css' %}"
+            document.getElementById('mystylesheet').href = sheet
+            localStorage.setItem('theme', sheet)
+          }
+        </script>
+        <script>
+      
+        $(".like").click(function (e) {
+          var id = this.id;
+          var href = $(".like").find("a").attr("href");
+          e.preventDefault();
+      
+          $.ajax({
+            url: href,
+            data: {
+              likeId: id,
+            },
+            success: function (response) {
+              if (response.liked) {
+                $("#likebtn" + id).html("Unlike");
+                $("#likebtn" + id).css("color", "red");
+              } else {
+                $("#likebtn" + id).html("Like");
+                $("#likebtn" + id).css("color", "green");
+              }
+            },
+          });
+        });
+      </script>
+</html>
+ 

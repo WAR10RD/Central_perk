@@ -1,0 +1,80 @@
+{% extends "feed/base.html" %}
+{% load static %}
+{% block content %}
+{% if followers_list %}
+<h2 class="tag-color" style="text-align:center; padding-top:20px"> Followers :</h2>
+      {% for user_p in followers_list %}
+      <!-- <h2 style="color: white; text-align:center"> Users :</h2> -->
+      <div class="card card-signin  createPost my-4   p-0">
+        <div class="card-body">
+      <a href="{{ user_p.get_absolute_url }}" >
+        <img src="{{ user_p.image.url }}" class="avatar rounded-circle basic-mod-img" alt=""/>
+    </a>
+      <a class="text-dark" href="{{ user_p.get_absolute_url }}">
+        <b class="tag-color">{{ user_p }}</b>
+        
+      </a>
+      
+      {% if request.user == user_p %}
+      
+      {% else %}
+      <small class="float-right">
+        <a class="btn btn-primary mr-2 basic-mod btn-block btn-circled" href="{{ user_p.message_url }}" >Message</a>
+      </small>
+      <small class="float-right mr-2">
+      {% if user_p not in request.user.profile.followings.all %}
+        <small >
+          <a class="btn btn-primary basic-mod btn-block btn-circled" href="{% url 'follow_request' user_p.id %}" >Follow</a>
+          </small >
+      {% else %}
+        <small><a class="btn btn-secondary basic-mod btn-block btn-circled" href=" {% url 'un_follow_request' user_p.id %}">Following</a></small>
+      
+        {% endif %}
+      </small>
+        
+  
+      {% endif %}
+      </small>
+    </div>
+  </div>
+  {% endfor %}
+{% endif %}
+  {% if followings_list %}
+  <h2 class="tag-color" style="text-align:center; padding-top:20px"> Followings :</h2>
+      {% for user_p in followings_list %}
+      <!-- <h2 style="color: white; text-align:center"> Users :</h2> -->
+      <div class="card card-signin  createPost my-4   p-0">
+        <div class="card-body">
+      <a href="{{ user_p.get_absolute_url }}" >
+        <img src="{{ user_p.image.url }}" class="avatar rounded-circle basic-mod-img" alt=""/>
+    </a>
+      <a class="text-dark" href="{{ user_p.get_absolute_url }}">
+        <b class="tag-color">{{ user_p }}</b>
+      </a>
+      
+      {% if request.user == user_p %}
+      
+      {% else %}
+      <small class="float-right">
+        <a class="btn btn-primary mr-2 basic-mod btn-block btn-circled" href="{{ user_p.message_url }}" >Message</a>
+      </small>
+      <small class="float-right mr-2">
+      {% if user_p not in request.user.profile.followings.all %}
+        <small >
+          <a class="btn btn-primary basic-mod btn-block btn-circled" href="{% url 'follow_request' user_p.id %}" >Follow</a>
+          </small >
+      {% else %}
+        <small><a class="btn btn-secondary basic-mod btn-block btn-circled" href=" {% url 'un_follow_request' user_p.id %}">Following</a></small>
+      
+        {% endif %}
+      </small>
+        
+  
+      {% endif %}
+      </small>
+    </div>
+  </div>
+{% endfor %}
+{% endif %}
+{% endblock content %}
+
