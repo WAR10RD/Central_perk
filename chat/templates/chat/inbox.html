@@ -1,0 +1,47 @@
+{% extends "feed/base.html" %}
+
+{% block content %}
+<h2 class="basic-mod btn-circled tag-color" style=" text-align:center" >Inbox</h2>
+<ul id='chat-item'>
+{% if object_list %}
+{% for chat in object_list %}
+{% if chat %}
+<li >
+<div class="createPost card card-signin my-3" onclick='location.href="{{ chat.other_user.profile.message_url }}";'>
+      <!-- add user message address and check if it work -->
+      
+            
+            <div class="card-body no-padding">
+                  
+                    <img src="{{ chat.other_user.profile.image.url }}" class="avatar rounded-circle float-left"  alt=""/>
+      
+                  
+                  <div class="float-left ml-3">
+                  
+                    <p class="post-details font-weight-bold h2 text-uppercase">{{ chat.other_user }}</p>
+                    <!-- <b class="post-details">@{{ post.user_name }}</b> -->
+                  
+             
+                  <p class="font-weight-light post-details mb-0">{{ chat.message }}</p>
+                  </div>
+                </div>
+
+</div>
+</li>
+      <!-- <p class="msg alignright font-style">{{ chat.message }}  </p> -->
+      <!-- <p class="msg alignright">  {{chat.user}}</p> -->
+    
+     
+        
+        <!-- <p class="msg alignleft">{{chat.user}}  </p>  -->
+         <!-- <p class="msg alignleft font-style">  {{ chat.username }}</p> -->
+        
+{% endif %}
+      {% endfor %}
+{% else %}
+
+<div class="createPost card card-signin my-3">
+      <p class="post-details font-weight-bold h2 " style="text-align: center;">Empty Inbox</p>
+</div>
+{% endif %}
+{% endblock %}

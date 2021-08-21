@@ -1,0 +1,23 @@
+{% extends 'feed/baseNew.html' %} {% load static %} {% block content %}
+<br /><br />
+    
+      <div class="middlebox1 card card-signin my-5" style="width: 50vw;">
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            <b class="tag-color">You have been logged out!</b>
+          </h5>
+          <form class="form-signin">
+            <div class="form-group">
+              <a
+                class="btn btn-lg btn-info btn-block text-uppercase"
+                href="{% url 'login' %}"
+                >Login Again</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
