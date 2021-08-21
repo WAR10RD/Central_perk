@@ -1,0 +1,519 @@
+<!--  -->
+{% load static %}  
+{% load crispy_forms_tags %}
+ {% block content %}
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- <link
+      rel="icon"
+      type="image/png"
+      href="https://dl.dropboxusercontent.com/s/o093y16u4d3kojv/code.png?dl=0"
+    /> -->
+    <!-- Bootstrap CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://dl.dropboxusercontent.com/s/ecyb1drs5j1jyjf/styles.css?dl=0"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+        
+    <link rel="icon" href="{% static 'feed/img/brand/favicon.png' %}" type="image/png">
+  <!-- Fonts -->
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"> -->
+  <!-- Icons -->
+  <link rel="stylesheet" href="{% static 'feed/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'feed/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="{% static 'feed/css/argon.css' %}" type="text/css">
+
+  <!-- my css code -->
+
+  <link rel="stylesheet" id="mystylesheet" href="{% static 'feed/css/style.css' %}" type="text/css">  
+
+    
+    <title>Central Perk</title>
+ </head>
+ <body>
+  {% if user.is_authenticated %}
+      
+  <div>
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-default border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- add icon here -->
+          <!-- Search form -->
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3 ml-auto" id="navbar-search-main" method="POST"
+          action="{% url 'search_posts' %}">
+          {% csrf_token %}
+            <div class="form-group mb-0 ">
+              <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="Search" name="searched" type="text">
+              </div>
+            </div>
+            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </form>
+          
+          <!-- Navbar links -->
+          
+          {% if user.is_authenticated %}
+          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <span class=" rounded-circle">
+                    <img src="{{ user.profile.image.url }}" class=" avatar rounded-circle">
+                  </span>
+                  <div class="media-body  ml-2  d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold text-uppercase">{{ user.profile.user }}</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Welcome!</h6>
+                </div>
+                <a href="{% url 'my_profile' %}" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>My Profile</span>
+                </a>
+                <a class="dropdown-item" onclick="swapTheme()">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span id="dark_button">Enable Dark Mode</span>
+                </a>
+                <a href="{% url 'edit_profile' %}" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Settings</span>
+                </a>
+                
+                
+
+                <!-- <button class="btn btn-light" onclick="swapStyleLight()">Light Mode</button>
+		              <button class="btn btn-dark" onclick="swapStyleDark()">Dark Mode</button> -->
+                <!-- <a href="#!" class="dropdown-item">
+                  <i class="ni ni-calendar-grid-58"></i>
+                  <span>Activity</span>
+                </a> -->
+                <!-- <a href="#!" class="dropdown-item">
+                  <i class="ni ni-support-16"></i>
+                  <span>Support</span>
+                </a> -->
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'logout' %}" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+          {% endif %} 
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+    {% endif %}
+
+  <div class = "leftbox ">
+    <!-- <div class="sidebar-left "> -->
+    
+    <ul>
+      <li class="spacing"> <i class="fa fa-home px-3 tag-color"  aria-hidden="true"></i><a href="/" class="tag-color  font-style">Home</a></li>
+      <!-- <li><a href="#" class="tag-color font-style">Inbox</a></li> -->
+      <li class="spacing"> <i class="fa fa-inbox px-3 tag-color"  aria-hidden="true"></i><a href="/messages" class="tag-color font-style ">Inbox</a></li>
+      <li class="spacing"> <i class="fa fa-inbox px-3 tag-color"  aria-hidden="true"></i><a href="/follow-list" class="tag-color font-style ">Followers</a></li>
+      <li class="spacing"><i class="fa fa-user px-3 tag-color"  aria-hidden="true"></i><a href="{% url 'my_profile' %}" class="tag-color font-style ">Profile</a></li>
+      <li class="spacing"><i class="fa fa-tools px-3 tag-color"  aria-hidden="true"></i><a href="{% url 'edit_profile' %}" class="tag-color font-style  ">Settings</a></li>
+      
+    </ul>
+  <!-- </div> -->
+</div>
+<div class = "middlebox" style="width: 45%;">
+  
+  <!-- <form class="form-signin" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <br />
+      {{ u_form|crispy }} {{ p_form|crispy }}
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-lg btn-primary btn-block text-uppercase round-corner" type="submit" >Update</button
+      ><br /><br />
+      <a class="btn btn-lg btn-secondary btn-block text-uppercase round-corner" href="{% url 'my_profile' %}" >Go Back</a>
+    </div>
+  </form> -->
+
+  <div class="createPost card card-signin my-4" >
+    <!-- <div class="card card-signin my-5"  style="cursor: pointer;"> -->
+     
+      <!-- <div class="card-body no-padding">             -->
+      <div class="alignright">
+
+        <h2 class="font-weight-bold text-uppercase alignleft tag-color" >Bio</h2>
+        
+        <i  class="fa fa-pen alignleft p-1 ml-4 tag-color" aria-hidden="true">
+          <a class="pl-0.5 tag-color" data-toggle="modal" data-target="#BioModel" data-whatever="@mdo"  href="#">Edit</a>
+        </i>
+
+      </div>
+      <hr >
+
+      <div class="alignright">
+
+        <h2 class="font-weight-bold text-uppercase alignleft tag-color" >Skill</h2>
+        
+        <i  class="fa fa-pen alignleft p-1 ml-4 tag-color" aria-hidden="true">
+          <a class="pl-0.5 tag-color" data-toggle="modal" data-target="#SkillModel" data-whatever="@mdo"   href="#">Edit</a>
+        </i>
+
+      </div>
+
+      <hr >
+
+      <div class="alignright">
+
+        <h2 class="font-weight-bold text-uppercase alignleft tag-color" >Dark Mode Settings</h2>
+        
+      </div>
+      
+        <a class=" tag-color btn basic-mod btn-circled " onclick="swapTheme()">
+          <i class="ni ni-settings-gear-65"></i>
+          <span id="dark_button">Enable Dark Mode</span>
+        </a>
+      
+      <hr >
+
+      <div class="alignright">
+
+        <h2 class="font-weight-bold text-uppercase alignleft tag-color" >Delete Account</h2>
+        
+        <!-- <i  class="fa fa-pen alignleft p-1 ml-4" aria-hidden="true">
+          <a class="pl-0.5"  href="#">Edit</a>
+        </i> -->
+
+      </div>
+
+      <hr class="mt-0 pt-0">
+      
+      <div class="alignright">
+
+        <small >
+          <a class="pl-0.5 tag-color btn btn-danger basic-mod btn-circled" data-toggle="modal" data-target="#DeleteModel" data-whatever="@mdo"   href="#">Delete</a>
+          <!-- <a class="btn btn-danger basic-mod btn-circled" href="{% url 'profile_delete' request.user.id %}" >Delete</a> -->
+          </small >
+        <!-- <h2 class="font-weight-bold text-uppercase alignleft" >Delete Account</h2> -->
+        
+        <!-- <i  class="fa fa-pen alignleft p-1 ml-4" aria-hidden="true">
+          <a class="pl-0.5"  href="#">Edit</a>
+        </i> -->
+
+      </div>
+
+    </div>        
+  </div>
+        
+     
+
+<div class = "rightbox ">
+  <div class="card card-profile shadow user-setting-profile">
+    <!-- <div class="center_place"> -->
+      <!-- <div class="row justify-content-center"> -->
+      <!-- <h2 class="font-weight-bold text-uppercase alignleft" >User Information</h2> -->
+      <!-- <div> -->
+      <!-- <i  class="fa fa-pen alignleft p-1 ml-4" aria-hidden="true"> -->
+        <!-- <a class="pl-0.5"  href="#">Edit</a> -->
+      <!-- </i> -->
+    <!-- </div> -->
+    <!-- </div> -->
+
+    <div class="center_place">
+      <div class="text-center-my alignleft" style="width: 50%;">
+        <h2 class="font-weight-bold text-uppercase tag-color" >User Information</h2>
+      </div>
+
+      <div class="alignright" >
+        <i  class="fa fa-pen alignleft p-1 ml-4 tag-color" aria-hidden="true">
+          <a class="pl-0.5 tag-color" data-toggle="modal" data-target="#UserInformationModel" data-whatever="@mdo"  href="#">Edit</a>
+        </i>
+      </div>
+    </div>
+    <hr class="m-0 p-0">
+    <div class="card-profile-image profile-img-div">
+      <a href="{{ u.profile.image.url }}">
+        <img src="{{ u.profile.image.url }}" class="rounded-circle edit-profile-img" />
+      </a>
+    </div>
+
+    
+    <!-- 
+      
+      <div class="col-lg-3 order-lg-2">
+        <div class="card-profile-image profile-img-div">
+          <a href="{{ u.profile.image.url }}">
+            <img src="{{ u.profile.image.url }}" class="rounded-circle profile-img" />
+          </a>
+        </div>
+      </div>
+    </div> -->
+    
+    <div class="card-body  ">
+      <div class="row">
+        <!--  <div class="col"> -->
+          <div class=" d-flex justify-content-center profile-stat " >
+            <!-- <div>
+              <span class="heading">{{ u.profile.friends.count }}</span>
+              {% if request.user == u %}
+              <span class="description"
+                ><a href="{% url 'friend_list' %}">Friends</a></span
+              >
+              {% else %}
+              <span class="description">Friends</span>
+              {% endif %}
+              <span class="heading">{{ post_count }}</span>
+              <span class="description"
+                ><a href="{% url 'user-posts' u.username %}"
+                  >Posts</a
+                ></span
+              >
+            </div> -->
+            
+          
+          </div>
+          
+        </div>
+      </div>
+      <div class="text-center pt-3">
+          <div class="float-center">
+            <h3 class="tag-color" >{{ u }}</h3>
+            <h4 class="font-style tag-color" >{{ u.profile.bio }}</h4>
+          </div>
+         
+          <span class="heading tag-color" >{{ followers.count }}</span>
+          <h3 class="tag-color" >Followers</h3>
+          <!-- <p>{{ u.profile.bio }}</p> -->
+          <hr class="my-2" />
+          
+          <small >
+            <a  class="btn btn-primary basic-mod btn-circled " onclick="showDiv()">Changed Avatar</a>
+          </small >
+          <div id="uploadImg"  style="display:none;" class="answer_list" >
+            <form  method="POST" action="{% url 'edit_profile' %}" id="img-form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <!-- <div class="form-group">
+                <label for="message-text" class="col-form-label">Bio:</label>
+                <textarea class="form-control" id="message-text" name="bio"></textarea>
+              </div> -->
+              <!-- <input type="file" name="image" class="btn btn-primary basic-mod btn-block btn-circled">Upload Avatar<input> -->
+              {{ p_image_form|crispy }}
+            </form>
+            <button type="submit" form="img-form" name="p_img" class="btn btn-primary">Update</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="BioModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="BioModelLabel">Update User Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  method="POST" action="{% url 'edit_profile' %}" id="bio-form" >
+          {% csrf_token %}
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">Bio:</label>
+            <textarea class="form-control" id="message-text" name="bio"></textarea>
+          </div> -->
+          {{ p_b_form|crispy }}
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="bio-form" name="P_b" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="SkillModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="SkillModelLabel">Update User Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  method="POST" action="{% url 'edit_profile' %}" id="skill-form" >
+          {% csrf_token %}
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">Bio:</label>
+            <textarea class="form-control" id="message-text" name="bio"></textarea>
+          </div> -->
+          {{ p_skill_form|crispy }}
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="skill-form" name="p_skill" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="UserInformationModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="UserInformationModelLabel">Update User Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  method="POST" action="{% url 'edit_profile' %}" id="u-form" >
+          {% csrf_token %}
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">username:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+            <input type="text" style="width: 80%;">
+          </div> -->
+          {{ u_form|crispy }}
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">Email:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+            <input type="text" style="width: 80%;">
+          </div> -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="u-form" name="u_form" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="DeleteModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DeleteModelLabel">Delete User Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>You will lost all your data</h3>
+        <!-- <form  method="POST" action="{% url 'edit_profile' %}" id="u-form" > -->
+          <!-- {% csrf_token %} -->
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">username:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+            <input type="text" style="width: 80%;">
+          </div> -->
+          <!-- {{ u_form|crispy }} -->
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">Email:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+            <input type="text" style="width: 80%;">
+          </div> -->
+        <!-- </form> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="submit" form="u-form" name="u_form" class="btn btn-primary">Update</button> -->
+        <a class="btn btn-danger basic-mod btn-circled" href="{% url 'profile_delete' request.user.id %}" >Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+ </body>
+ <script src="{% static 'feed/js/jqurey.js' %}"></script>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+
+        var setTheme = localStorage.getItem('theme')
+        console.log('theme:', setTheme)
+        
+                
+        if (setTheme == null){
+          swapStyle()
+          document.getElementById('dark_button').textContent = "Enable Dark Mode"
+        }
+        else if(setTheme == '/static/feed/css/style.css'){
+         swapStyleLight()
+         document.getElementById('dark_button').textContent = "Enable Dark Mode"
+        }else{
+          swapStyleDark()
+          document.getElementById('dark_button').textContent = "Disable Dark Mode"
+        }
+        
+        function swapTheme(){
+          var text = document.getElementById('dark_button').innerText
+
+          if (text == "Enable Dark Mode"){
+            swapStyleDark()
+            document.getElementById('dark_button').textContent = "Disable Dark Mode"
+          }else if(text == "Disable Dark Mode"){
+            swapStyleLight()
+            document.getElementById('dark_button').textContent = "Enable Dark Mode"
+          }
+          
+        }
+
+        function swapStyleLight(){
+          sheet = "{% static 'feed/css/style.css' %}"
+          document.getElementById('mystylesheet').href = sheet
+          localStorage.setItem('theme', sheet)
+        }
+        function swapStyleDark(){
+          sheet = "{% static 'feed/css/DarkStyle.css' %}"
+          document.getElementById('mystylesheet').href = sheet
+          localStorage.setItem('theme', sheet)
+        }
+    
+        function showDiv(){
+          document.getElementById("uploadImg").style.display= "block";
+        }
+        
+        
+      </script>
+      
+      {% block jsfiles %}{% endblock jsfiles %}
+ </html>
+
+{% endblock content %}
