@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
-import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +26,7 @@ SECRET_KEY = 'django-insecure-g=*7yq^-+g%-mc1y(oi(z*@bi61ha%e5l1n0k$3=cf+ja!relo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 
 # Application definition
@@ -45,8 +43,8 @@ INSTALLED_APPS = [
     'users',
     'feed',
     'crispy_forms',
-    'stdimage',
-    "channels",
+    # 'stdimage',
+    # "channels",
     'chat',
 ]
 
@@ -86,11 +84,27 @@ WSGI_APPLICATION = 'Central_perk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# TODO: change to postgresql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+# Value = 0 means timeout is disabled. Default value is 0 if not sent
+POSTGRESS_STATEMENT_TIMEOUT = int(os.environ.get('POSTGRESS_STATEMENT_TIMEOUT', 0))
+POSTGRESS_CONN_MAX_AGE = int(os.environ.get('POSTGRESS_CONN_MAX_AGE', 60))
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'central_perk_db'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'USER': os.environ.get('POSTGRES_USER', 'admin'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'admin'),
+        'port': os.environ.get('POSTGRES_PORT', '5432'),
+        'CONN_MAX_AGE ' : POSTGRESS_CONN_MAX_AGE,
     }
+    # TODO: setup and configure AWS RDS
 }
 
 
@@ -138,12 +152,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# TODO : setup and configure AWS S3
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
+# TODO: move the smtp to aws ses
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -156,10 +173,10 @@ EMAIL_HOST_PASSWORD = 'holfwxygbuppvaqy'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# TODO: change to redis
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
-        
     },
 }
 

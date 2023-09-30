@@ -11,6 +11,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('', include('feed.urls')),
 	# path('', include('chat.urls')),
+	# TODO : move user related urls to users/urls.py
 	path('users/', user_views.users_list, name='users_list'),
 	path('users/<slug>/', user_views.profile_view, name='profile_view'),
 	path('users/<int:id>/delete/', user_views.profile_delete, name='profile_delete'),
@@ -18,6 +19,7 @@ urlpatterns = [
 	# path('<str:room_name>/', chat_views.room,name='room'),
 	path('edit-profile/', user_views.edit_profile, name='edit_profile'),
 	# path('edit-profile/', user_views.edit_bio_profile, name='edit_bio_profile'),
+	
 	path('my-profile/', user_views.my_profile, name='my_profile'),
 	path('search_users/', user_views.search_users, name='search_users'),
 	path('register/', user_views.register, name='register'),
