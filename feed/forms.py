@@ -13,7 +13,7 @@ class NewCommentForm(forms.ModelForm):
 		fields = ['comment']
 
 class ImageForm(NewPostForm): #extending form
-    images = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    images = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': False}))
 
     class Meta(NewPostForm.Meta):
         fields = NewPostForm.Meta.fields + ['images',]

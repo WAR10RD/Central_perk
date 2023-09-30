@@ -1,15 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse
-from django.utils import timezone
 from django.db.models.signals import post_save
 from django.conf import settings
 from autoslug import AutoSlugField
-from django.dispatch import receiver
-import uuid
-from PIL import Image
-import string, random
-from django.utils.text import slugify
+
 
 class Profile(models.Model):
     
@@ -21,14 +15,13 @@ class Profile(models.Model):
     friends = models.ManyToManyField("Profile", blank=True)
     followings = models.ManyToManyField("self", null=True, related_name="p",blank=True, symmetrical=False)
     followers = models.ManyToManyField("self", null=True, blank=True,related_name="f", symmetrical=False)
-    
 
     def __str__(self):
     	return str(self.user.username)
 
     def get_absolute_url(self):
-    	return "/users/{}".format(self.slug)
-    
+        return "/users/{}".format(self.slug)
+
     def message_url(self):
     	return "/messages/{}".format(self.user)
 
