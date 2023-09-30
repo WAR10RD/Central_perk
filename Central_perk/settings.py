@@ -40,11 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # installed apps
 
+    'api',
     'users',
     'feed',
     'crispy_forms',
-    # 'stdimage',
-    # "channels",
     'chat',
 ]
 
@@ -84,13 +83,6 @@ WSGI_APPLICATION = 'Central_perk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# TODO: change to postgresql
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 # Value = 0 means timeout is disabled. Default value is 0 if not sent
 POSTGRESS_STATEMENT_TIMEOUT = int(os.environ.get('POSTGRESS_STATEMENT_TIMEOUT', 0))
 POSTGRESS_CONN_MAX_AGE = int(os.environ.get('POSTGRESS_CONN_MAX_AGE', 60))
@@ -104,7 +96,6 @@ DATABASES = {
         'port': os.environ.get('POSTGRES_PORT', '5432'),
         'CONN_MAX_AGE ' : POSTGRESS_CONN_MAX_AGE,
     }
-    # TODO: setup and configure AWS RDS
 }
 
 

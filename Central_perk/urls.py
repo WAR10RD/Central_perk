@@ -10,15 +10,14 @@ from django.conf import settings
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('', include('feed.urls')),
+	path('api/', include('api.urls')),
 	# path('', include('chat.urls')),
 	# TODO : move user related urls to users/urls.py
 	path('users/', user_views.users_list, name='users_list'),
 	path('users/<slug>/', user_views.profile_view, name='profile_view'),
 	path('users/<int:id>/delete/', user_views.profile_delete, name='profile_delete'),
 	path('friends/', user_views.friend_list, name='friend_list'),
-	# path('<str:room_name>/', chat_views.room,name='room'),
 	path('edit-profile/', user_views.edit_profile, name='edit_profile'),
-	# path('edit-profile/', user_views.edit_bio_profile, name='edit_bio_profile'),
 	
 	path('my-profile/', user_views.my_profile, name='my_profile'),
 	path('search_users/', user_views.search_users, name='search_users'),
@@ -32,11 +31,6 @@ urlpatterns = [
 	path('follow-list/', user_views.follow_list, name='follow_list'),
 	path('users/follow-request/<int:id>/', user_views.follow_request, name='follow_request'),
 	path('users/unfollow-request/<int:id>/', user_views.un_follow_request, name='un_follow_request'),
-	# path('users/<slug>/', user_views.profile_view_2, name='profile_view_2'),
-	# path('chat', chat_views.chat_view, name='chats'),
-    # path('chat/<int:sender>/<int:receiver>', chat_views.message_view, name='chat'),
-    # path('api/messages/<int:sender>/<int:receiver>', chat_views.message_list, name='message-detail'),
-    # path('api/messages', chat_views.message_list, name='message-list'),
 	path('messages/', include('chat.urls')),	
 ]
 # messages/
